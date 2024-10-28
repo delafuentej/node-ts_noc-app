@@ -1,6 +1,6 @@
 import { LogDatasource } from "../../domain/datasources/log.datasource";
-import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
-import { writeFileSync, mkdirSync, existsSync, appendFileSync} from "fs";
+import { LogEntity, LogSeverityLevel } from '../../domain/entities/log.entity';
+import { writeFileSync, readFileSync, mkdirSync, existsSync, appendFileSync} from "fs";
 
 export class FileSystemDatasource implements LogDatasource{
 
@@ -33,22 +33,44 @@ export class FileSystemDatasource implements LogDatasource{
 
        appendFileSync(this.allLogsPath,logAsJson);
 
-       switch (log.level) {
+        switch (log.level) {
 
-        case LogSeverityLevel.medium:
-            appendFileSync(this.mediumLogsPath, logAsJson);
-            break;
-        case LogSeverityLevel.high:
-            appendFileSync(this.highLogsPath, logAsJson);
-            break;
-        case LogSeverityLevel.low:
-        default:
-            return;
+            case LogSeverityLevel.medium:
+                appendFileSync(this.mediumLogsPath, logAsJson);
+                break;
+            case LogSeverityLevel.high:
+                appendFileSync(this.highLogsPath, logAsJson);
+                break;
+            default:
+                return;
+        }
+
     }
 
+    private getLogsFromFile = (path:string): LogEntity[] => {
+
+        const content = readFileSync(path, 'utf-8');
+
+        const logs = content.split('\n').map( log=> LogEntity.fromJson(log));
+
+        return logs;
+
     }
-    getLogs(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {
-        throw new Error("Method not implemented.");
+   async getLogs(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {
+       
+        switch(severityLevel){
+            case LogSeverityLevel.low:
+            return this.getLogsFromFile(this.allLogsPath);
+               
+            case LogSeverityLevel.medium:
+            return this.getLogsFromFile(this.mediumLogsPath);
+               
+            case LogSeverityLevel.high:
+            return this.getLogsFromFile(this.highLogsPath);
+
+            default:
+                throw new Error(`${severityLevel} not implemented`)
+        }
     }
 
 }
