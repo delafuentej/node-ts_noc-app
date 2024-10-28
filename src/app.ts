@@ -1,5 +1,14 @@
+import { ServerApp } from "./presentation/server-app";
 
 
-const title: string = 'Go ahead!!!';
+//self-invoking anonymous function
+( ()=> {
+    
+    main();
+})();
 
-console.log('Init Project', title);
+
+ function main(){
+   
+    ServerApp.run()
+  }
