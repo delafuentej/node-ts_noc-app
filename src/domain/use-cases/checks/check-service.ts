@@ -1,16 +1,19 @@
 //create de file data
 
-
-  
 export interface CheckServiceUseCase{
     execute(url:string):Promise<boolean>;
 };
 
+type SuccessCallback = ()=> void;
+type ErrorCallback = (error:string) => void;
    
 export class CheckService implements CheckServiceUseCase{
-    // constructor(){
-    //      //DI: Dependency Injection
-    // };
+    constructor(
+        private readonly sucessCallback: SuccessCallback,
+        private readonly errorCallback: ErrorCallback,
+    ){
+         //DI: Dependency Injection
+    };
 
     public async execute(url:string): Promise<boolean>{
         try{
@@ -19,10 +22,12 @@ export class CheckService implements CheckServiceUseCase{
             if(!req.ok){
                 throw new Error(`Error on check service: ${url}`)
             }
-            console.log(`${url} is ok`)
+            this.sucessCallback();
+          //  console.log(`${url} is ok`)
             return true;
         }catch(error){
-            console.log(`Error${error}`)
+            this.errorCallback(`${error}`);
+           // console.log(`Error${error}`)
             return false;
         }
      
