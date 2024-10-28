@@ -17,11 +17,13 @@ export class ServerApp {
    CronService.createJob(
       '*/5 * * * * *',
       ()=>{
-         const url = 'http://localhost:3000';
+         const url = 'https://google.com';
         new CheckService(
          fsLogRepository,
          () => console.log(`${url} is ok`),
-         (error) => console.log(error)
+       // undefined,
+         (error) => console.log(error),
+       // undefined,
         ).execute(url)
         //new CheckService().execute('http://localhost:3000')
       }
