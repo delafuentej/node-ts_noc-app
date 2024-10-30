@@ -17,14 +17,18 @@ export class ServerApp {
 
     // Send email
       const emailService = new EmailService();
-      emailService.sendEmail({
-         to:'jfl1981sg@gmail.com',
-         subject:'Logs System',
-         htmlBody: `
-         <h3>Logs System - NOC</h3>
-         <p>See Logs</p>
-         `
-      })
+
+      emailService.sendEmailWithFileSystemLogs(
+         ['jfl1981sg@gmail.com', 'txetxusg1917@gmail.com']
+      );
+      // emailService.sendEmail({
+      //    to:'jfl1981sg@gmail.com',
+      //    subject:'Logs System',
+      //    htmlBody: `
+      //    <h3>Logs System - NOC</h3>
+      //    <p>See Logs</p>
+      //    `
+      // })
    // CronService.createJob(
    //    '*/5 * * * * *',
    //    ()=>{
