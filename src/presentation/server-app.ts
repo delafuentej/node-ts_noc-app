@@ -2,6 +2,7 @@ import { CheckService } from "../domain/use-cases/checks/check-service";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { LogRepositoryImplementation } from "../infrastructure/repository/log.repository.implementation";
 import { CronService } from "./cron/cron-service";
+import { EmailService } from "./email/email-service";
 
 
 
@@ -14,20 +15,30 @@ export class ServerApp {
    public static run(){
     console.log('Server is running...');
 
-   CronService.createJob(
-      '*/5 * * * * *',
-      ()=>{
-         const url = 'https://google.com';
-        new CheckService(
-         fsLogRepository,
-         () => console.log(`${url} is ok`),
-       // undefined,
-         (error) => console.log(error),
-       // undefined,
-        ).execute(url)
-        //new CheckService().execute('http://localhost:3000')
-      }
-   );
+    // Send email
+      const emailService = new EmailService();
+      emailService.sendEmail({
+         to:'jfl1981sg@gmail.com',
+         subject:'Logs System',
+         htmlBody: `
+         <h3>Logs System - NOC</h3>
+         <p>See Logs</p>
+         `
+      })
+   // CronService.createJob(
+   //    '*/5 * * * * *',
+   //    ()=>{
+   //       const url = 'https://google.com';
+   //      new CheckService(
+   //       fsLogRepository,
+   //       () => console.log(`${url} is ok`),
+   //     // undefined,
+   //       (error) => console.log(error),
+   //     // undefined,
+   //      ).execute(url)
+   //      //new CheckService().execute('http://localhost:3000')
+   //    }
+   // );
 
  
    }

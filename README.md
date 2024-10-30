@@ -9,4 +9,7 @@
 PORT=
 MAILER_EMAIL=
 MAILER_SECRET_KEY=
+PROD=
 ```
+3. Execute the comand: ```npm install```.
+4. Execute the comand: ```npm run dev```.
