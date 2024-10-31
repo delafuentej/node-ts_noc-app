@@ -10,23 +10,23 @@ import { EmailService } from "./email/email-service";
 const fsLogRepository = new LogRepositoryImplementation(
    new FileSystemDatasource(),
 );
-
+const emailService = new EmailService()
 
 export class ServerApp {
    public static run(){
     console.log('Server is running...');
 
     // Send email
-       const emailService = new EmailService(// fsLogRepository 
-          );
+   // const emailService = new EmailService(// fsLogRepository 
+    //);
 
           //send email use-case
-         new SendEmailLogs(
-            emailService,
-            fsLogRepository,
-         ).execute(
-            ['jfl1981sg@gmail.com', 'txetxusg1917@gmail.com']
-         )
+         // new SendEmailLogs(
+         //    emailService,
+         //    fsLogRepository,
+         // ).execute(
+         //    ['jfl1981sg@gmail.com', 'txetxusg1917@gmail.com']
+         // )
       // emailService.sendEmailWithFileSystemLogs(
       //    ['jfl1981sg@gmail.com', 'txetxusg1917@gmail.com']
       // );

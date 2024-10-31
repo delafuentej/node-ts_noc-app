@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .env
+mongo/
 # Logs
 logs/
 .DS_Store
