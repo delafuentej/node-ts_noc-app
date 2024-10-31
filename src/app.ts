@@ -17,6 +17,7 @@ import { ServerApp } from "./presentation/server-app";
     mongoUrl: envs.MONGO_URL,
     dbName: envs.MONGO_DB_NAME,
    })
+   
    // create a db record in mongo db
    // create a collection => a table in an relational db
    // create a document => a record('row') in an relational db

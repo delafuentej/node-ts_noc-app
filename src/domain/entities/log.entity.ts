@@ -31,6 +31,19 @@ export class LogEntity {
 
     };
 
+    static fromObject= (object: {[key: string]: any}): LogEntity => {
+        const {level, message, createAt, origin } = object;
+
+        const log = new LogEntity({
+            level: level,
+            message: message,
+            createAt: createAt,
+            origin: origin,
+        });
+
+        return log;
+    }
+
     static fromJson = (json:string): LogEntity => {
        const {level, message, createAt, origin} = JSON.parse(json);
        if(!message) throw new Error('Message is required');
