@@ -1,6 +1,7 @@
 import { LogSeverityLevel } from "../domain/entities/log.entity";
 import { LogRepository } from "../domain/repository/log.repository";
 import { CheckService } from "../domain/use-cases/checks/check-service";
+import { CheckServiceMultiple } from "../domain/use-cases/checks/check-service-multiple";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { MongoLogDatasource } from "../infrastructure/datasources/mongo-log.datasource";
@@ -11,11 +12,18 @@ import { EmailService } from "./email/email-service";
 
 
 
-const logRepository = new LogRepositoryImplementation(
-   //new FileSystemDatasource(),
-   //new MongoLogDatasource(),
-   new PostgresLogDatasource(),
+const fsLogRepository = new LogRepositoryImplementation(
+   new FileSystemDatasource(),
 );
+const mongoLogRepository = new LogRepositoryImplementation(
+   new MongoLogDatasource()
+);
+const postresLogRepository = new LogRepositoryImplementation(
+   new PostgresLogDatasource(),
+)
+
+const logRepositories = [fsLogRepository, mongoLogRepository, postresLogRepository];
+
 const emailService = new EmailService()
 
 export class ServerApp {
@@ -52,8 +60,8 @@ export class ServerApp {
       '*/5 * * * * *',
       ()=>{
          const url = 'https://google.com';
-        new CheckService(
-         logRepository,
+        new CheckServiceMultiple(
+         logRepositories,
          () => console.log(`${url} is ok`),
        // undefined,
          (error) => console.log(error),
