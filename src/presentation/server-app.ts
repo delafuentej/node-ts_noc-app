@@ -4,6 +4,7 @@ import { CheckService } from "../domain/use-cases/checks/check-service";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { MongoLogDatasource } from "../infrastructure/datasources/mongo-log.datasource";
+import { PostgresLogDatasource } from "../infrastructure/datasources/postgres-log.datasource";
 import { LogRepositoryImplementation } from "../infrastructure/repository/log.repository.implementation";
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email-service";
@@ -12,7 +13,8 @@ import { EmailService } from "./email/email-service";
 
 const logRepository = new LogRepositoryImplementation(
    //new FileSystemDatasource(),
-new MongoLogDatasource(),
+   //new MongoLogDatasource(),
+   new PostgresLogDatasource(),
 );
 const emailService = new EmailService()
 
@@ -46,20 +48,20 @@ export class ServerApp {
 
       // const logs = await logRepository.getLogs(LogSeverityLevel.low)
       // console.log(logs);
-   // CronService.createJob(
-   //    '*/5 * * * * *',
-   //    ()=>{
-   //       const url = 'https://google.com';
-   //      new CheckService(
-   //       logRepository,
-   //       () => console.log(`${url} is ok`),
-   //     // undefined,
-   //       (error) => console.log(error),
-   //     // undefined,
-   //      ).execute(url)
-   //      //new CheckService().execute('http://localhost:3000')
-   //    }
-   // );
+   CronService.createJob(
+      '*/5 * * * * *',
+      ()=>{
+         const url = 'https://google.com';
+        new CheckService(
+         logRepository,
+         () => console.log(`${url} is ok`),
+       // undefined,
+         (error) => console.log(error),
+       // undefined,
+        ).execute(url)
+        //new CheckService().execute('http://localhost:3000')
+      }
+   );
 
  
    }
