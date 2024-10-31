@@ -2,6 +2,7 @@ node_modules/
 dist/
 .env
 /mongo
+/postgres
 # Logs
 logs/
 .DS_Store
