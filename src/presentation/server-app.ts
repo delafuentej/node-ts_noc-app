@@ -1,19 +1,23 @@
+import { LogSeverityLevel } from "../domain/entities/log.entity";
+import { LogRepository } from "../domain/repository/log.repository";
 import { CheckService } from "../domain/use-cases/checks/check-service";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
+import { MongoLogDatasource } from "../infrastructure/datasources/mongo-log.datasource";
 import { LogRepositoryImplementation } from "../infrastructure/repository/log.repository.implementation";
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email-service";
 
 
 
-const fsLogRepository = new LogRepositoryImplementation(
-   new FileSystemDatasource(),
+const logRepository = new LogRepositoryImplementation(
+   //new FileSystemDatasource(),
+new MongoLogDatasource(),
 );
 const emailService = new EmailService()
 
 export class ServerApp {
-   public static run(){
+   public static async run(){
     console.log('Server is running...');
 
     // Send email
@@ -39,12 +43,15 @@ export class ServerApp {
       //    <p>See Logs</p>
       //    `
       // })
+
+      // const logs = await logRepository.getLogs(LogSeverityLevel.low)
+      // console.log(logs);
    // CronService.createJob(
    //    '*/5 * * * * *',
    //    ()=>{
    //       const url = 'https://google.com';
    //      new CheckService(
-   //       fsLogRepository,
+   //       logRepository,
    //       () => console.log(`${url} is ok`),
    //     // undefined,
    //       (error) => console.log(error),
