@@ -56,20 +56,20 @@ export class ServerApp {
 
       // const logs = await logRepository.getLogs(LogSeverityLevel.low)
       // console.log(logs);
-   CronService.createJob(
-      '*/5 * * * * *',
-      ()=>{
-         const url = 'https://google.com';
-        new CheckServiceMultiple(
-         logRepositories,
-         () => console.log(`${url} is ok`),
-       // undefined,
-         (error) => console.log(error),
-       // undefined,
-        ).execute(url)
-        //new CheckService().execute('http://localhost:3000')
-      }
-   );
+   // CronService.createJob(
+   //    '*/5 * * * * *',
+   //    ()=>{
+   //       const url = 'https://google.com';
+   //      new CheckServiceMultiple(
+   //       logRepositories,
+   //       () => console.log(`${url} is ok`),
+   //     // undefined,
+   //       (error) => console.log(error),
+   //     // undefined,
+   //      ).execute(url)
+   //      //new CheckService().execute('http://localhost:3000')
+   //    }
+   // );
 
  
    }
