@@ -3,6 +3,7 @@ import { MongoDB } from './getting-started';
 
 describe('getting-started.ts MongoDB connect', ()=>{
 
+    // to avoid the warning message in the console
     afterAll(()=>{
         mongoose.connection.close();
     })
