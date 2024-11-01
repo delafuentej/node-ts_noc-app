@@ -34,6 +34,8 @@ describe('log.model.ts testing LogModel', ()=> {
             },
 
         ));
+
+        await LogModel.findByIdAndDelete(log.id);
     });
 
     test('should return the schema object', ()=>{
