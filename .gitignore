@@ -1,9 +1,16 @@
 node_modules/
 dist/
 .env
+
+# db
 /mongo
 /postgres
+
 /prisma
 # Logs
 logs/
 .DS_Store
+# testing
+/mongo-test
+/postgres-test
+/coverage
