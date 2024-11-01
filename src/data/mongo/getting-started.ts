@@ -14,9 +14,11 @@ export class MongoDB {
             await mongoose.connect(mongoUrl, {
                 dbName: dbName,
             });
-            console.log('Mongo DB connected!');
+          //  console.log('Mongo DB connected!');
+            return true;
         }catch(error){
-            console.log(error,'Mongo connection error');
+            throw error;
+         //   console.log(error,'Mongo connection error');
         }
     }
 }
