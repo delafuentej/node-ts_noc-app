@@ -36,11 +36,6 @@ describe('mongo-log.datasource.ts MongoLogDatasource', () => {
     test('should create a log', async()=> {
 
        
-
-       
-
-     
-
        await mongoLogDataSource.saveLog(newLog);
 
        expect(logSpy).toHaveBeenCalled();

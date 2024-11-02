@@ -13,11 +13,13 @@ import { ServerApp } from "./presentation/server-app";
 
 
  async function main(){
+  console.log( envs.MONGO_URL)
+  console.log( envs.MONGO_DB_NAME)
 
-   await MongoDB.connect({
-    mongoUrl: envs.MONGO_URL,
-    dbName: envs.MONGO_DB_NAME,
-   })
+  //  await MongoDB.connect({
+  //   mongoUrl: envs.MONGO_URL,
+  //   dbName: envs.MONGO_DB_NAME,
+  //  })
    
    //const prisma = new PrismaClient();
 
